@@ -73,6 +73,8 @@ def fetch_problem(problem_id: int):
 
     title_wo_suffix = re.sub(r"\(설명\)|\(py\)", "", raw_title).strip()
     title_compact = re.sub(r"\s+", "", title_wo_suffix)
+    # 파일명에 쓸 수 없는 문자 제거 (Windows 기준 \ / : * ? " < > | 등)
+    title_compact = re.sub(r'[\\/:*?"<>|]', "", title_compact)
 
     def section_text(elem_id):
         el = soup.find(id=elem_id)

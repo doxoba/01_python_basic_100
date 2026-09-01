@@ -65,6 +65,21 @@ python codeup_new.py day02 6021-6024 --open   # 생성 후 VSCode로 바로 열�
 - 문제 설명은 자동으로 채워지지만, 실제 풀이와 메모는 직접 작성해야 합니다.
 - 자동 생성된 제목은 원문을 그대로 붙인 형태라 예전 파일명(수동으로 줄인 표현)과 완전히 똑같지는 않을 수 있습니다.
 
+## 커밋 자동화 (`codeup_commit.py`)
+
+매일 여러 문제를 풀고 나서, 파일 하나마다 손으로 `git add` → 커밋 메시지 입력 → `git commit`을 반복하지 않도록 자동화한 스크립트입니다. 변경된 파일을 찾아서 파일 1개당 커밋 1개씩, 문제 번호 순서대로 커밋합니다.
+
+```
+python codeup_commit.py --dry-run          # 어떤 순서/메시지로 커밋될지 미리보기
+python codeup_commit.py                    # 실제 커밋 실행 (저장소 전체 변경 사항 대상)
+python codeup_commit.py --day day02        # day02 폴더 변경 사항만 대상
+python codeup_commit.py --push             # 커밋 후 git push까지
+```
+
+- 파일명이 `번호_분류_제목.py` 형식이면 커밋 메시지를 `번호: [분류] 제목` 형태로 자동 생성합니다.
+- 그 외 파일(README.md 등)은 `파일경로: 업데이트`로 커밋합니다.
+- git이 PATH에 등록되어 있어야 하며, 저장소 루트(`.git`이 있는 `01_python_basic_100` 폴더)에서 실행해야 합니다.
+
 ## 진행 현황
 
 | Day | 문제 범위 | 문제 수 | 비고 |

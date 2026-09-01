@@ -31,7 +31,14 @@ def run(cmd, cwd):
 
 
 def get_changed_files(repo_root: Path, day: Optional[str]):
-    result = run(["git", "status", "--porcelain"], cwd=repo_root)
+    # --untracked-files=all: 한 번도 커밋된 적 없는 폴더를 "day01/" 한 줄로 뭉뚱그리지 않고
+    # 그 안의 파일들을 하나씩 낱개로 보여주게 함 (파일별 개별 커밋을 위해 필요)
+    # -c core.quotepath=false: 한글 등 비-ASCII 파일명을 \352\270... 같은 8진수 이스케이프로
+    # 표시하지 않고 있는 그대로(UTF-8) 출력하게 함
+    result = run(
+        ["git", "-c", "core.quotepath=false", "status", "--porcelain", "--untracked-files=all"],
+        cwd=repo_root,
+    )
     if result.returncode != 0:
         print("git status 실행 실패. 이 폴더가 git 저장소가 맞는지 확인해주세요.", file=sys.stderr)
         print(result.stderr, file=sys.stderr)
